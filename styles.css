@@ -31,17 +31,72 @@ button{
     color: #545454;
 }
 
-ul{
+.todos{
     padding: 0;
     margin: 0;
     list-style: none;
 }
 
-li{
+.todos li{
     border-bottom: 1px #e3e3e3 solid;
-    padding: 1rem;
+    position: relative;
+    overflow: hidden;
+    cursor: pointer;
+    height: 60px;
+    user-select: none;
 }
 
+.todos li[data-status=done] span{
+    text-decoration: line-through;
+    font-style: italic;
+}
+
+.todos li span{
+    padding: 0 1.5rem;
+    display: block;
+    position: relative;
+    z-index: 1;
+    background-color: #ffffff;
+    transition: transform 200ms;
+    height: 60px;
+    line-height: 60px;
+    box-shadow: rgba(0,0,0,0.1) -5px 0 10px;
+}
+
+.todos li.selected span{
+    transform: translateX(120px);
+}
+
+.todos li .todo-actions{
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    right: 0;
+
+    text-align: left;
+    background-color: #f1f1f1;
+}
+
+.todos li .todo-actions button{
+    background-color: transparent;
+    font-size: 17px;
+    color: #545454;
+    width: 60px;
+    height: 60px;
+    line-height: 60px;
+    padding: 0;
+    border: none;
+    display: inline-block;
+    cursor: pointer;
+    vertical-align: top;
+}
+
+.todos li .todo-actions :not(:first-child){
+    border-left: 1px solid #c7c7c7;
+}
+
+/* ADD TODO FORM */
 .form-add-todo {
     display: flex;
     align-content: space-between;
@@ -49,7 +104,7 @@ li{
 
 .form-add-todo input{
     flex: 1;
-    padding: 1rem;
+    padding: 1rem 1.5rem;
     font-size: 18px;
     border: none;
     font-weight: 400;
