@@ -1,0 +1,68 @@
+*, *:before, *:after{
+    box-sizing: border-box;
+}
+
+body{
+    margin: 0;
+    font-family: 'Nunito', sans-serif;
+}
+
+input,
+button{
+    outline: none;
+    font-family: 'Nunito', sans-serif;
+}
+
+.main{
+    width: 600px;
+    margin: 0 auto;
+    margin-top: 2rem;
+    background-color: #fff;
+    box-shadow: rgba(0,0,0,0.1) 0 0 30px;
+}
+
+.list-title{
+    font-weight: 600;
+    text-transform: uppercase;
+    text-align: center;
+    margin: 0;
+    padding: 2rem;
+    background-color: #e3e3e3;
+    color: #545454;
+}
+
+ul{
+    padding: 0;
+    margin: 0;
+    list-style: none;
+}
+
+li{
+    border-bottom: 1px #e3e3e3 solid;
+    padding: 1rem;
+}
+
+.form-add-todo {
+    display: flex;
+    align-content: space-between;
+}
+
+.form-add-todo input{
+    flex: 1;
+    padding: 1rem;
+    font-size: 18px;
+    border: none;
+    font-weight: 400;
+}
+
+.form-add-todo input::-webkit-input-placeholder {
+    font-style: italic;
+    font-weight: 300;
+}
+
+.form-add-todo button{
+    width: 50px;
+    background-color: #e3e3e3;
+    border: none;
+    font-size: 30px;
+}
