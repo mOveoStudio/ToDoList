@@ -194,5 +194,7 @@ document.addEventListener("DOMContentLoaded", function () {
     $todoCounter = document.querySelector(".todo-counter");
 
     $addTodoForm.addEventListener("submit", submitTodo);
+
+    $addTodoInput.focus();
     refreshTodoList();
 });
