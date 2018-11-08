@@ -28,6 +28,7 @@ var $todoList,
     $addTodoCheckbox,
     $todoCounter;
 
+
 // ---------------------------------
 // TODO LIST ACTIONS
 // ---------------------------------
@@ -47,6 +48,7 @@ function checkTodo(index) {
 
     todo.checked = true;
     todos.push(todo);
+
     refreshTodoList();
 }
 
@@ -59,6 +61,7 @@ function unCheckTodo(index) {
 
     refreshTodoList();
 }
+
 
 // ---------------------------------
 // REGENERATE HTML TODO LIST
@@ -141,6 +144,7 @@ function addActionsButton($line, todo, index) {
     }
 }
 
+
 // ---------------------------------
 // PRIORITIES FOR TODO LINES
 // ---------------------------------
@@ -151,6 +155,8 @@ function addPriorityIcon($line, todo){
         $line.appendChild($highPriorityIcon);
     }
 }
+
+
 // ---------------------------------
 // TODO LINES
 // ---------------------------------
