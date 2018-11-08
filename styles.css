@@ -15,10 +15,9 @@ button{
 
 .main{
     width: 600px;
-    margin: 0 auto;
-    margin-top: 2rem;
     background-color: #fff;
     box-shadow: rgba(0,0,0,0.1) 0 0 30px;
+    margin: 2rem auto 4rem;
 }
 
 .list-title{
