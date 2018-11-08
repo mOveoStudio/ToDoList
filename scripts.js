@@ -20,7 +20,8 @@ var todos = [
 
 var $todoList,
     $addTodoForm,
-    $addTodoInput;
+    $addTodoInput,
+    $todoCounter;
 
 // ---------------------------------
 // TODO LIST ACTIONS
@@ -30,22 +31,22 @@ function addTodo(todo) {
     refreshTodoList();
 }
 
-function removeTodo(index){
+function removeTodo(index) {
     todos.splice(index, 1);
     refreshTodoList();
 }
 
-function checkTodo(index){
+function checkTodo(index) {
     var todo = todos[index];
     removeTodo(index);
-    addTodo({
+    todos.push({
         title: todo.title,
         status: "done"
     });
     refreshTodoList();
 }
 
-function unCheckTodo(index){
+function unCheckTodo(index) {
     var todo = todos[index];
     removeTodo(index);
     todos.unshift({
@@ -64,14 +65,26 @@ function refreshTodoList() {
     todos.forEach(function (todo, index) {
         var $todoLine = getLineElement(todo, index);
         $todoList.appendChild($todoLine);
+    });
+
+    refreshCounter(filterTodos(todos).length);
+}
+
+function filterTodos(todos) {
+    return todos.filter(function (todo) {
+        return todo.status === "in_progress";
     })
+}
+
+function refreshCounter(total) {
+    $todoCounter.innerHTML = total;
 }
 
 
 // ---------------------------------
 // ACTION BUTTONS FOR TODO LINES
 // ---------------------------------
-function getActionButton(icon){
+function getActionButton(icon) {
     var $checkButton = document.createElement("button");
     var $checkButtonIcon = document.createElement("i");
     $checkButton.classList.add("fas", icon);
@@ -80,10 +93,10 @@ function getActionButton(icon){
     return $checkButton
 }
 
-function getRemoveButton(index){
+function getRemoveButton(index) {
     var $removeButton = getActionButton("fa-trash-alt");
 
-    $removeButton.addEventListener("click", function(e){
+    $removeButton.addEventListener("click", function (e) {
         e.stopPropagation();
         removeTodo(index)
     });
@@ -91,10 +104,10 @@ function getRemoveButton(index){
     return $removeButton;
 }
 
-function getCheckButton(index){
+function getCheckButton(index) {
     var $checkButton = getActionButton("fa-check");
 
-    $checkButton.addEventListener("click", function(e){
+    $checkButton.addEventListener("click", function (e) {
         e.stopPropagation();
         checkTodo(index)
     });
@@ -102,10 +115,10 @@ function getCheckButton(index){
     return $checkButton;
 }
 
-function getUnCheckButton(index){
+function getUnCheckButton(index) {
     var $unCheckedButton = getActionButton("fa-redo-alt");
 
-    $unCheckedButton.addEventListener("click", function(e){
+    $unCheckedButton.addEventListener("click", function (e) {
         e.stopPropagation();
         unCheckTodo(index)
     });
@@ -113,15 +126,15 @@ function getUnCheckButton(index){
     return $unCheckedButton;
 }
 
-function addActionsButton($line, todo, index){
+function addActionsButton($line, todo, index) {
     var $todoActions = $line.querySelector(".todo-actions");
 
-    if(todo.status === "done"){
+    if (todo.status === "done") {
         $todoActions.appendChild(getRemoveButton(index));
         $todoActions.appendChild(getUnCheckButton(index));
     }
 
-    if(todo.status === "in_progress"){
+    if (todo.status === "in_progress") {
         $todoActions.appendChild(getRemoveButton(index));
         $todoActions.appendChild(getCheckButton(index));
     }
@@ -130,8 +143,8 @@ function addActionsButton($line, todo, index){
 // ---------------------------------
 // ACTION FOR TODO LINES
 // ---------------------------------
-function addLineEvents($line){
-    $line.addEventListener("click", function(){
+function addLineEvents($line) {
+    $line.addEventListener("click", function () {
         $line.classList.toggle("selected");
     });
 }
@@ -141,9 +154,9 @@ function getLineElement(todo, index) {
 
     temp.innerHTML =
         "<li data-id='" + index + "' data-status='" + todo.status + "'>" +
-            "<div class='todo-actions'>" +
-            "</div>" +
-            "<span>" + todo.title + "</span>" +
+        "<div class='todo-actions'>" +
+        "</div>" +
+        "<span>" + todo.title + "</span>" +
         "</li>";
 
     $line = temp.firstChild;
@@ -178,7 +191,8 @@ document.addEventListener("DOMContentLoaded", function () {
     $addTodoForm = document.querySelector(".form-add-todo");
     $addTodoInput = $addTodoForm.querySelector("[name='todo-title']");
 
+    $todoCounter = document.querySelector(".todo-counter");
+
     $addTodoForm.addEventListener("submit", submitTodo);
     refreshTodoList();
-
 });

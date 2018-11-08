@@ -29,6 +29,27 @@ button{
     padding: 2rem;
     background-color: #e3e3e3;
     color: #545454;
+    position: relative;
+}
+
+.list-title > span{
+    position: relative;
+}
+
+.todo-counter{
+    position: absolute;
+    right: -25px;
+    top: -5px;
+    display: inline-block;
+    background-color: #545454;
+    color: #ffffff;
+    vertical-align: middle;
+    border-radius: 50%;
+    font-weight: 700;
+    width: 20px;
+    height: 20px;
+    line-height: 20px;
+    font-size: 12px;
 }
 
 .todos{
