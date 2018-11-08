@@ -1,19 +1,23 @@
 var todos = [
     {
         title: "Task 1",
-        status: "in_progress"
+        priority: "normal",
+        checked: false
     },
     {
         title: "Task 2",
-        status: "in_progress"
+        priority: "normal",
+        checked: false
     },
     {
         title: "Task 4",
-        status: "in_progress"
+        priority: "high",
+        checked: false
     },
     {
         title: "Task 3",
-        status: "done"
+        priority: "normal",
+        checked: true
     }
 
 ];
@@ -21,6 +25,7 @@ var todos = [
 var $todoList,
     $addTodoForm,
     $addTodoInput,
+    $addTodoCheckbox,
     $todoCounter;
 
 // ---------------------------------
@@ -39,20 +44,18 @@ function removeTodo(index) {
 function checkTodo(index) {
     var todo = todos[index];
     removeTodo(index);
-    todos.push({
-        title: todo.title,
-        status: "done"
-    });
+
+    todo.checked = true;
+    todos.push(todo);
     refreshTodoList();
 }
 
 function unCheckTodo(index) {
     var todo = todos[index];
     removeTodo(index);
-    todos.unshift({
-        title: todo.title,
-        status: "in_progress"
-    });
+
+    todo.checked = false;
+    todos.unshift(todo);
 
     refreshTodoList();
 }
@@ -72,7 +75,7 @@ function refreshTodoList() {
 
 function filterTodos(todos) {
     return todos.filter(function (todo) {
-        return todo.status === "in_progress";
+        return todo.checked === false;
     })
 }
 
@@ -129,12 +132,10 @@ function getUnCheckButton(index) {
 function addActionsButton($line, todo, index) {
     var $todoActions = $line.querySelector(".todo-actions");
 
-    if (todo.status === "done") {
+    if (todo.checked) {
         $todoActions.appendChild(getRemoveButton(index));
         $todoActions.appendChild(getUnCheckButton(index));
-    }
-
-    if (todo.status === "in_progress") {
+    }else{
         $todoActions.appendChild(getRemoveButton(index));
         $todoActions.appendChild(getCheckButton(index));
     }
@@ -153,13 +154,21 @@ function getLineElement(todo, index) {
     var temp = document.createElement("div");
 
     temp.innerHTML =
-        "<li data-id='" + index + "' data-status='" + todo.status + "'>" +
+        "<li data-id='" + index + "' data-checked='" + todo.checked + "' data-priority='" + todo.priority + "'>" +
         "<div class='todo-actions'>" +
         "</div>" +
         "<span>" + todo.title + "</span>" +
         "</li>";
 
     $line = temp.firstChild;
+
+    // MOVE TO A DEDICATED FUNCTION
+    if(todo.priority === "high"){
+        var $highPriorityIcon = document.createElement("i");
+        $highPriorityIcon.classList.add("fas", "fa-exclamation-circle");
+        $line.appendChild($highPriorityIcon);
+    }
+
     addActionsButton($line, todo, index);
     addLineEvents($line);
     return $line;
@@ -177,7 +186,8 @@ function submitTodo(e) {
     if (inputValue !== "") {
         addTodo({
             title: inputValue,
-            status: "in_progress"
+            checked: false,
+            priority: ($addTodoCheckbox.checked) ? "high" : "normal"
         });
         $addTodoForm.reset();
         $addTodoInput.focus();
@@ -190,6 +200,7 @@ document.addEventListener("DOMContentLoaded", function () {
     $todoList = document.querySelector(".todos");
     $addTodoForm = document.querySelector(".form-add-todo");
     $addTodoInput = $addTodoForm.querySelector("[name='todo-title']");
+    $addTodoCheckbox = document.querySelector("[name='todo-important']");
 
     $todoCounter = document.querySelector(".todo-counter");
 

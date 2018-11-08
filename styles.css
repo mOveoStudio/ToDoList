@@ -66,7 +66,7 @@ button{
     user-select: none;
 }
 
-.todos li[data-status=done] span{
+.todos li[data-checked=true] span{
     text-decoration: line-through;
     font-style: italic;
 }
@@ -116,13 +116,27 @@ button{
     border-left: 1px solid #c7c7c7;
 }
 
+.todos li > i{
+    position: absolute;
+    top: 50%;
+    margin-top: -11px;
+    right: 1rem;
+    font-size: 22px;
+    color: #c7c7c7;
+    z-index: 2;
+}
+
 /* ADD TODO FORM */
 .form-add-todo {
     display: flex;
     align-content: space-between;
 }
 
-.form-add-todo input{
+.form-add-todo button{
+    cursor: pointer;
+}
+
+.form-add-todo input[name="todo-title"]{
     flex: 1;
     padding: 1rem 1.5rem;
     font-size: 18px;
@@ -140,4 +154,22 @@ button{
     background-color: #e3e3e3;
     border: none;
     font-size: 30px;
+}
+
+.form-add-todo input[name="todo-important"] {
+    display: none;
+}
+
+.form-add-todo input[name="todo-important"] + span{
+    width: 60px;
+    font-size: 20px;
+    text-align: center;
+    line-height: 60px;
+    display: block;
+    cursor: pointer;
+    color: #e3e3e3;
+}
+
+.form-add-todo input[name="todo-important"]:checked + span {
+    color: #545454;
 }
