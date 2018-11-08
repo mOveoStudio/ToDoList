@@ -142,7 +142,17 @@ function addActionsButton($line, todo, index) {
 }
 
 // ---------------------------------
-// ACTION FOR TODO LINES
+// PRIORITIES FOR TODO LINES
+// ---------------------------------
+function addPriorityIcon($line, todo){
+    if(todo.priority === "high"){
+        var $highPriorityIcon = document.createElement("i");
+        $highPriorityIcon.classList.add("fas", "fa-exclamation-circle");
+        $line.appendChild($highPriorityIcon);
+    }
+}
+// ---------------------------------
+// TODO LINES
 // ---------------------------------
 function addLineEvents($line) {
     $line.addEventListener("click", function () {
@@ -162,14 +172,8 @@ function getLineElement(todo, index) {
 
     $line = temp.firstChild;
 
-    // MOVE TO A DEDICATED FUNCTION
-    if(todo.priority === "high"){
-        var $highPriorityIcon = document.createElement("i");
-        $highPriorityIcon.classList.add("fas", "fa-exclamation-circle");
-        $line.appendChild($highPriorityIcon);
-    }
-
     addActionsButton($line, todo, index);
+    addPriorityIcon($line, todo);
     addLineEvents($line);
     return $line;
 }
@@ -205,6 +209,7 @@ document.addEventListener("DOMContentLoaded", function () {
     $todoCounter = document.querySelector(".todo-counter");
 
     $addTodoForm.addEventListener("submit", submitTodo);
+    $addTodoCheckbox.addEventListener("click", function(){$addTodoInput.focus();});
 
     $addTodoInput.focus();
     refreshTodoList();
