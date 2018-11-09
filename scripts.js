@@ -1,20 +1,26 @@
+'use strict';
+
 var todos = [
     {
+        id: 0,
         title: "Task 1",
         priority: "normal",
         checked: false
     },
     {
+        id: 1,
         title: "Task 2",
         priority: "normal",
         checked: false
     },
     {
+        id: 2,
         title: "Task 4",
         priority: "high",
         checked: false
     },
     {
+        id: 3,
         title: "Task 3",
         priority: "normal",
         checked: true
@@ -33,18 +39,19 @@ var $todoList,
 // TODO LIST ACTIONS
 // ---------------------------------
 function addTodo(todo) {
+    todo.id = uniqueID();
     todos.unshift(todo);
     refreshTodoList();
 }
 
-function removeTodo(index) {
+function removeTodo(todo) {
+    var index = todos.findIndex(function(item){ return item.id === todo.id });
     todos.splice(index, 1);
     refreshTodoList();
 }
 
-function checkTodo(index) {
-    var todo = todos[index];
-    removeTodo(index);
+function checkTodo(todo) {
+    removeTodo(todo);
 
     todo.checked = true;
     todos.push(todo);
@@ -52,9 +59,8 @@ function checkTodo(index) {
     refreshTodoList();
 }
 
-function unCheckTodo(index) {
-    var todo = todos[index];
-    removeTodo(index);
+function unCheckTodo(todo) {
+    removeTodo(todo);
 
     todo.checked = false;
     todos.unshift(todo);
@@ -62,6 +68,13 @@ function unCheckTodo(index) {
     refreshTodoList();
 }
 
+function uniqueID(){
+    var id = todos.length;
+    while(todos.some(function(todo){return todo.id === id})){
+        id++;
+    }
+    return id;
+}
 
 // ---------------------------------
 // REGENERATE HTML TODO LIST
@@ -99,48 +112,48 @@ function getActionButton(icon) {
     return $checkButton
 }
 
-function getRemoveButton(index) {
+function getRemoveButton(todo) {
     var $removeButton = getActionButton("fa-trash-alt");
 
     $removeButton.addEventListener("click", function (e) {
         e.stopPropagation();
-        removeTodo(index)
+        removeTodo(todo)
     });
 
     return $removeButton;
 }
 
-function getCheckButton(index) {
+function getCheckButton(todo) {
     var $checkButton = getActionButton("fa-check");
 
     $checkButton.addEventListener("click", function (e) {
         e.stopPropagation();
-        checkTodo(index)
+        checkTodo(todo)
     });
 
     return $checkButton;
 }
 
-function getUnCheckButton(index) {
+function getUnCheckButton(todo) {
     var $unCheckedButton = getActionButton("fa-redo-alt");
 
     $unCheckedButton.addEventListener("click", function (e) {
         e.stopPropagation();
-        unCheckTodo(index)
+        unCheckTodo(todo)
     });
 
     return $unCheckedButton;
 }
 
-function addActionsButton($line, todo, index) {
+function addActionsButton($line, todo) {
     var $todoActions = $line.querySelector(".todo-actions");
 
     if (todo.checked) {
-        $todoActions.appendChild(getRemoveButton(index));
-        $todoActions.appendChild(getUnCheckButton(index));
+        $todoActions.appendChild(getRemoveButton(todo));
+        $todoActions.appendChild(getUnCheckButton(todo));
     }else{
-        $todoActions.appendChild(getRemoveButton(index));
-        $todoActions.appendChild(getCheckButton(index));
+        $todoActions.appendChild(getRemoveButton(todo));
+        $todoActions.appendChild(getCheckButton(todo));
     }
 }
 
@@ -166,19 +179,19 @@ function addLineEvents($line) {
     });
 }
 
-function getLineElement(todo, index) {
+function getLineElement(todo) {
     var temp = document.createElement("div");
 
     temp.innerHTML =
-        "<li data-id='" + index + "' data-checked='" + todo.checked + "' data-priority='" + todo.priority + "'>" +
+        "<li data-id='" + todo.id + "' data-checked='" + todo.checked + "' data-priority='" + todo.priority + "'>" +
         "<div class='todo-actions'>" +
         "</div>" +
         "<span>" + todo.title + "</span>" +
         "</li>";
 
-    $line = temp.firstChild;
+    var $line = temp.firstChild;
 
-    addActionsButton($line, todo, index);
+    addActionsButton($line, todo);
     addPriorityIcon($line, todo);
     addLineEvents($line);
     return $line;
