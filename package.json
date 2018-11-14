@@ -1,0 +1,22 @@
+{
+  "name": "javascript-todolist",
+  "version": "1.0.0",
+  "description": "Just another todo list\r Demo: [http://demo.moveo-webdesign.com/todo-list/](http://demo.moveo-webdesign.com/todo-list/)",
+  "main": "src/app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mOveoStudio/ToDoList.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/mOveoStudio/ToDoList/issues"
+  },
+  "homepage": "https://github.com/mOveoStudio/ToDoList#readme",
+  "devDependencies": {
+    "sass": "^1.14.3"
+  }
+}

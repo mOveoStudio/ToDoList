@@ -1,0 +1,181 @@
+*, *:before, *:after{
+  box-sizing: border-box;
+}
+
+body{
+  margin: 0;
+  font-family: 'Nunito', sans-serif;
+}
+
+input,
+button{
+  outline: none;
+  font-family: 'Nunito', sans-serif;
+}
+
+.main{
+  width: 600px;
+  /*background-color: #fff;*/
+  box-shadow: rgba(0,0,0,0.1) 0 0 30px;
+  margin: 2rem auto 4rem;
+}
+
+.list-title{
+  font-weight: 600;
+  text-transform: uppercase;
+  text-align: center;
+  margin: 0;
+  padding: 2rem;
+  background-color: #e3e3e3;
+  color: #545454;
+  position: relative;
+}
+
+.list-title > span{
+  position: relative;
+}
+
+.todo-counter{
+  position: absolute;
+  right: -25px;
+  top: -5px;
+  display: inline-block;
+  background-color: #545454;
+  color: #ffffff;
+  vertical-align: middle;
+  border-radius: 50%;
+  font-weight: 700;
+  width: 20px;
+  height: 20px;
+  line-height: 20px;
+  font-size: 12px;
+}
+
+.todos{
+  padding: 0;
+  margin: 0;
+  list-style: none;
+  background-color: #e3e3e3;
+  overflow: hidden;
+}
+
+.todos li{
+  border-bottom: 1px #e3e3e3 solid;
+  position: relative;
+  overflow: hidden;
+  cursor: pointer;
+  height: 60px;
+  user-select: none;
+
+  animation-duration: 0.5s;
+}
+
+
+.todos li[data-checked=true] span{
+  text-decoration: line-through;
+  font-style: italic;
+}
+
+.todos li span{
+  padding: 0 1.5rem;
+  display: block;
+  position: relative;
+  z-index: 1;
+  background-color: #ffffff;
+  height: 60px;
+  line-height: 60px;
+  box-shadow: rgba(0,0,0,0.1) -5px 0 10px;
+  transition: background-color 0.8s, transform 200ms;
+}
+
+.todos li.selected span{
+  transform: translateX(120px);
+}
+
+.todos li .todo-actions{
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  right: 0;
+
+  text-align: left;
+  background-color: #f1f1f1;
+}
+
+.todos li .todo-actions button{
+  background-color: transparent;
+  font-size: 17px;
+  color: #545454;
+  width: 60px;
+  height: 60px;
+  line-height: 60px;
+  padding: 0;
+  border: none;
+  display: inline-block;
+  cursor: pointer;
+  vertical-align: top;
+}
+
+.todos li .todo-actions :not(:first-child){
+  border-left: 1px solid #c7c7c7;
+}
+
+.todos li > i{
+  position: absolute;
+  top: 50%;
+  margin-top: -11px;
+  right: 1rem;
+  font-size: 22px;
+  color: #c7c7c7;
+  z-index: 2;
+}
+
+/* ADD TODO FORM */
+.form-add-todo {
+  display: flex;
+  align-content: space-between;
+}
+
+.form-add-todo button{
+  cursor: pointer;
+}
+
+.form-add-todo input[name="todo-title"]{
+  flex: 1;
+  padding: 1rem 1.5rem;
+  font-size: 18px;
+  border: none;
+  font-weight: 400;
+}
+
+.form-add-todo input::-webkit-input-placeholder {
+  font-style: italic;
+  font-weight: 300;
+}
+
+.form-add-todo button{
+  width: 60px;
+  background-color: #e3e3e3;
+  border: none;
+  font-size: 30px;
+}
+
+.form-add-todo input[name="todo-important"] {
+  display: none;
+}
+
+.form-add-todo input[name="todo-important"] + span{
+  width: 60px;
+  font-size: 20px;
+  text-align: center;
+  line-height: 60px;
+  display: block;
+  cursor: pointer;
+  color: #e3e3e3;
+  background-color: #ffffff;
+}
+
+.form-add-todo input[name="todo-important"]:checked + span {
+  color: #545454;
+}

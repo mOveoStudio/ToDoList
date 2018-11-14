@@ -1,4 +1,10 @@
 'use strict';
+// CSS
+import './css/styles.scss';
+
+// LIBS
+import {square} from  './js/lib';
+console.log("THE SQUARE OF 10 IS", square(10));
 
 var todos = [
     {
@@ -257,6 +263,8 @@ function submitTodo(e) {
         $addTodoInput.focus();
     }
 }
+
+
 
 
 document.addEventListener("DOMContentLoaded", function () {
