@@ -35,37 +35,80 @@ var $todoList,
     $todoCounter;
 
 
+function setTodos(newTodos){
+    todos = newTodos;
+    refreshTodoList(todos);
+    refreshCounter(filterTodos(todos).length);
+}
+
+function arraysDiff(lastArray, newArray){
+    // ADDED
+    var added = newArray.filter(function(item){
+        return -1 === lastArray.findIndex(function(e){
+                return e.id === item.id;
+            })
+    });
+    console.log("ADDED", added);
+
+    // REMOVED
+    var removed = lastArray.filter(function(item){
+        return -1 === newArray.findIndex(function(e){
+                return e.id === item.id;
+            })
+    });
+    console.log("REMOVED", removed);
+
+    // REMAINED
+    var remained = lastArray.filter(function(item){
+        return -1 !== newArray.findIndex(function(e){
+                return e.id === item.id;
+            })
+    });
+    console.log("REMAINED", remained);
+}
+
+
 // ---------------------------------
 // TODO LIST ACTIONS
 // ---------------------------------
 function addTodo(todo) {
     todo.id = uniqueID();
-    todos.unshift(todo);
-    refreshTodoList();
+
+    var newTodos = todos.slice(0);
+    newTodos.unshift(todo);
+
+    setTodos(newTodos);
 }
 
 function removeTodo(todo) {
-    var index = todos.findIndex(function(item){ return item.id === todo.id });
-    todos.splice(index, 1);
-    refreshTodoList();
+    setTodos(
+        todos.filter(function(item){ return item.id !== todo.id})
+    );
 }
 
 function checkTodo(todo) {
-    removeTodo(todo);
+    setTodos(
+        todos.map(function(item){
+            console.log(item.id === todo.id);
+            if(item.id === todo.id){
+                item.checked = true;
+            }
 
-    todo.checked = true;
-    todos.push(todo);
-
-    refreshTodoList();
+            return item;
+        })
+    )
 }
 
 function unCheckTodo(todo) {
-    removeTodo(todo);
+    setTodos(
+        todos.map(function(item){
+            if(item.id === todo.id){
+                item.checked = false;
+            }
 
-    todo.checked = false;
-    todos.unshift(todo);
-
-    refreshTodoList();
+            return item;
+        })
+    )
 }
 
 function uniqueID(){
@@ -79,14 +122,12 @@ function uniqueID(){
 // ---------------------------------
 // REGENERATE HTML TODO LIST
 // ---------------------------------
-function refreshTodoList() {
+function refreshTodoList(todos) {
     $todoList.innerHTML = "";
     todos.forEach(function (todo, index) {
         var $todoLine = getLineElement(todo, index);
         $todoList.appendChild($todoLine);
     });
-
-    refreshCounter(filterTodos(todos).length);
 }
 
 function filterTodos(todos) {
@@ -231,5 +272,6 @@ document.addEventListener("DOMContentLoaded", function () {
     $addTodoCheckbox.addEventListener("click", function(){$addTodoInput.focus();});
 
     $addTodoInput.focus();
-    refreshTodoList();
+    setTodos(todos);
+
 });
